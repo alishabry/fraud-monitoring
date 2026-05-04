@@ -7,4 +7,5 @@
 
 В качестве источника данных используется набор датасетов из https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets/data
 
+Архитектура
 <img width="2408" height="1030" alt="image" src="https://github.com/user-attachments/assets/74055907-2db8-4b7c-8de5-57bce911a748" />
