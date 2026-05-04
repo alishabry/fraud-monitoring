@@ -1,0 +1,86 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 YaBrowser/26.3.0.0 Safari/537.36" version="29.1.1">
+  <diagram name="Страница — 1" id="BhD9zQuKFskY2HUXYqCe">
+    <mxGraphModel dx="4605" dy="1626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="850" width="2110" x="-640" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="380" width="590" x="1540" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="390" width="700" x="-620" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="400" width="1240" x="200" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-2" edge="1" parent="1" source="hRvtzh0S7EdN_6-e-deq-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="hRvtzh0S7EdN_6-e-deq-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a0522d;strokeColor=#6D1F00;fontColor=#ffffff;fontSize=14;" value="&lt;b&gt;extract raw data&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;сбор данных по api с Kaggle&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="270" x="-570" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-4" edge="1" parent="1" source="hRvtzh0S7EdN_6-e-deq-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="hRvtzh0S7EdN_6-e-deq-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a0522d;fontColor=#ffffff;strokeColor=#6D1F00;fontSize=14;" value="&lt;b&gt;load raw data to stg&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;загрузка сырых данных as is в stg слой базы transactions_bd&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="270" x="-240" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-6" edge="1" parent="1" source="hRvtzh0S7EdN_6-e-deq-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="hRvtzh0S7EdN_6-e-deq-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="850" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;fontSize=14;" value="&lt;div&gt;&lt;b&gt;formatting data stg-&amp;gt;ods&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;преобразование типов, заполнение пустых значений, единый нейминг&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="370" x="280" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-9" edge="1" parent="1" source="hRvtzh0S7EdN_6-e-deq-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="hRvtzh0S7EdN_6-e-deq-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1170" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;fontSize=14;" value="&lt;div&gt;&lt;b&gt;normalize data ods-&amp;gt;dds&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;нормализация данных, приведение к схеме &quot;Звезда&quot;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="340" x="680" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-18" edge="1" parent="1" source="hRvtzh0S7EdN_6-e-deq-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="hRvtzh0S7EdN_6-e-deq-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1650" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;fontSize=14;" value="&lt;div&gt;&lt;b&gt;aggregate data dds-&amp;gt;cdm&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;создание итоговых аналитических витрин для дашбордов и отчетов&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="330" x="1060" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;fontSize=17;" value="&lt;b&gt;vizualize data&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;визуализация данных&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="165" width="400" x="1640" y="657.5" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="dags/fraud_data_load.py" vertex="1">
+          <mxGeometry height="30" width="334" x="-684" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="dags/&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;fraud_dwh_pipeline.py&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="334" x="180" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-29" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=19;" value="Vizualization - Metabase" vertex="1">
+          <mxGeometry height="30" width="334" x="1520" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=21;" value="ELT process - Apache Airflow" vertex="1">
+          <mxGeometry height="30" width="334" x="-620" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-35" edge="1" parent="1" source="hRvtzh0S7EdN_6-e-deq-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="hRvtzh0S7EdN_6-e-deq-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-33" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;fontSize=16;" value="Kaggle.com" vertex="1">
+          <mxGeometry height="180" width="210" x="-1010" y="635" as="geometry" />
+        </mxCell>
+        <mxCell id="hRvtzh0S7EdN_6-e-deq-36" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=21;" value="source - kaggle" vertex="1">
+          <mxGeometry height="30" width="334" x="-1110" y="600" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
