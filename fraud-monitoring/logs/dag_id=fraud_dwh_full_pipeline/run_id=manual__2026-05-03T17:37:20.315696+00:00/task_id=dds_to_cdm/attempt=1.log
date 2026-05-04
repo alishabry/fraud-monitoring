@@ -1,0 +1,109 @@
+[2026-05-03T18:12:45.271+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fraud_dwh_full_pipeline.dds_to_cdm manual__2026-05-03T17:37:20.315696+00:00 [queued]>
+[2026-05-03T18:12:45.280+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fraud_dwh_full_pipeline.dds_to_cdm manual__2026-05-03T17:37:20.315696+00:00 [queued]>
+[2026-05-03T18:12:45.280+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 2
+[2026-05-03T18:12:45.292+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): dds_to_cdm> on 2026-05-03 17:37:20.315696+00:00
+[2026-05-03T18:12:45.297+0000] {standard_task_runner.py:60} INFO - Started process 63 to run task
+[2026-05-03T18:12:45.300+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fraud_dwh_full_pipeline', 'dds_to_cdm', 'manual__2026-05-03T17:37:20.315696+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/fraud_dwh_pipeline.py', '--cfg-path', '/tmp/tmpu_bh4psb']
+[2026-05-03T18:12:45.301+0000] {standard_task_runner.py:88} INFO - Job 11: Subtask dds_to_cdm
+[2026-05-03T18:12:45.314+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-05-03T18:12:45.340+0000] {task_command.py:423} INFO - Running <TaskInstance: fraud_dwh_full_pipeline.dds_to_cdm manual__2026-05-03T17:37:20.315696+00:00 [running]> on host 99ecb32bc6c5
+[2026-05-03T18:12:45.400+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fraud_dwh_full_pipeline' AIRFLOW_CTX_TASK_ID='dds_to_cdm' AIRFLOW_CTX_EXECUTION_DATE='2026-05-03T17:37:20.315696+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-03T17:37:20.315696+00:00'
+[2026-05-03T18:12:45.407+0000] {base.py:83} INFO - Using connection ID 'postgres' for task execution.
+[2026-05-03T18:12:45.407+0000] {sql.py:218} WARNING - This setter is for backward compatibility and should not be used.
+Since the introduction of connection property, the providers listed below breaks due to assigning value to self.connection in their __init__ method.
+* apache-***-providers-mysql<5.7.1
+* apache-***-providers-elasticsearch<5.5.1
+* apache-***-providers-postgres<5.13.0
+[2026-05-03T18:12:45.443+0000] {sql.py:553} INFO - Running statement: 
+    CREATE SCHEMA IF NOT EXISTS cdm;
+
+    -- CDM: Analytical marts for fraud monitoring dashboard
+    -- 1. Fraud rate by customer segment
+    DROP TABLE IF EXISTS cdm.fraud_rate_by_customer_segment;
+    CREATE TABLE cdm.fraud_rate_by_customer_segment AS
+    SELECT 
+        credit_segment,
+        transaction_value_segment,
+        COUNT(*) as total_transactions,
+        COUNT(*) FILTER (WHERE is_fraud_flag = true) as fraud_transactions,
+        ROUND(
+            100.0 * COUNT(*) FILTER (WHERE is_fraud_flag = true) / 
+            NULLIF(COUNT(*), 0), 2
+        ) as fraud_rate_pct
+    FROM dds.fact_transactions
+    GROUP BY 1, 2;
+
+    -- 2. Fraud rate by MCC category
+    DROP TABLE IF EXISTS cdm.fraud_rate_by_mcc;
+    CREATE TABLE cdm.fraud_rate_by_mcc AS
+    SELECT 
+        m.mcc_code,
+        m.mcc_description,
+        COUNT(*) as total_transactions,
+        COUNT(*) FILTER (WHERE is_fraud_flag = true) as fraud_transactions,
+        ROUND(
+            100.0 * COUNT(*) FILTER (WHERE is_fraud_flag = true) / 
+            NULLIF(COUNT(*), 0), 2
+        ) as fraud_rate_pct
+    FROM dds.fact_transactions t
+    JOIN dds.dim_mcc m ON t.mcc_code = m.mcc_code
+    GROUP BY 1, 2
+    ORDER BY fraud_rate_pct DESC;
+
+    -- 3. High-risk users (top fraudsters)
+    DROP TABLE IF EXISTS cdm.high_risk_users;
+    CREATE TABLE cdm.high_risk_users AS
+    SELECT 
+        u.user_id,
+        u.credit_score,
+        u.yearly_income,
+        COUNT(*) as total_transactions,
+        COUNT(*) FILTER (WHERE is_fraud_flag = true) as fraud_transactions,
+        ROUND(
+            100.0 * COUNT(*) FILTER (WHERE is_fraud_flag = true) / 
+            NULLIF(COUNT(*), 0), 2
+        ) as user_fraud_rate_pct
+    FROM dds.fact_transactions t
+    JOIN dds.dim_users u ON t.user_id = u.user_id
+    GROUP BY 1, 2, 3
+    HAVING COUNT(*) FILTER (WHERE is_fraud_flag = true) >= 5
+    ORDER BY user_fraud_rate_pct DESC;
+
+    -- 4. Fraud by time of day (hourly patterns)
+    DROP TABLE IF EXISTS cdm.fraud_by_hour;
+    CREATE TABLE cdm.fraud_by_hour AS
+    SELECT 
+        EXTRACT(HOUR FROM transaction_ts) as transaction_hour,
+        COUNT(*) as total_transactions,
+        COUNT(*) FILTER (WHERE is_fraud_flag = true) as fraud_transactions,
+        ROUND(
+            100.0 * COUNT(*) FILTER (WHERE is_fraud_flag = true) / 
+            NULLIF(COUNT(*), 0), 2
+        ) as fraud_rate_pct
+    FROM dds.fact_transactions
+    GROUP BY 1
+    ORDER BY 1;
+
+    -- 5. Card brand fraud analysis
+    DROP TABLE IF EXISTS cdm.fraud_by_card_brand;
+    CREATE TABLE cdm.fraud_by_card_brand AS
+    SELECT 
+        card_brand,
+        COUNT(*) as total_transactions,
+        COUNT(*) FILTER (WHERE is_fraud_flag = true) as fraud_transactions,
+        ROUND(
+            100.0 * COUNT(*) FILTER (WHERE is_fraud_flag = true) / 
+            NULLIF(COUNT(*), 0), 2
+        ) as fraud_rate_pct
+    FROM dds.fact_transactions t
+    JOIN dds.dim_cards c ON t.card_id = c.card_id
+    GROUP BY 1
+    ORDER BY fraud_rate_pct DESC;
+    , parameters: None
+[2026-05-03T18:17:33.993+0000] {sql.py:562} INFO - Rows affected: 4
+[2026-05-03T18:17:34.001+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-05-03T18:17:34.009+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=fraud_dwh_full_pipeline, task_id=dds_to_cdm, execution_date=20260503T173720, start_date=20260503T181245, end_date=20260503T181734
+[2026-05-03T18:17:34.036+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-05-03T18:17:34.048+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

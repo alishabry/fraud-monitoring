@@ -1,0 +1,55 @@
+[2026-05-03T14:18:17.380+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: test_postgres_connection.test_connection manual__2026-05-03T14:18:15.073073+00:00 [queued]>
+[2026-05-03T14:18:17.892+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: test_postgres_connection.test_connection manual__2026-05-03T14:18:15.073073+00:00 [queued]>
+[2026-05-03T14:18:17.893+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-05-03T14:18:17.939+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): test_connection> on 2026-05-03 14:18:15.073073+00:00
+[2026-05-03T14:18:17.958+0000] {standard_task_runner.py:60} INFO - Started process 50 to run task
+[2026-05-03T14:18:17.962+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'test_postgres_connection', 'test_connection', 'manual__2026-05-03T14:18:15.073073+00:00', '--job-id', '53', '--raw', '--subdir', 'DAGS_FOLDER/test.py', '--cfg-path', '/tmp/tmplgbl5xwo']
+[2026-05-03T14:18:17.982+0000] {standard_task_runner.py:88} INFO - Job 53: Subtask test_connection
+[2026-05-03T14:18:18.059+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-05-03T14:18:18.254+0000] {task_command.py:423} INFO - Running <TaskInstance: test_postgres_connection.test_connection manual__2026-05-03T14:18:15.073073+00:00 [running]> on host e20c5bc7e70d
+[2026-05-03T14:18:18.470+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='test_postgres_connection' AIRFLOW_CTX_TASK_ID='test_connection' AIRFLOW_CTX_EXECUTION_DATE='2026-05-03T14:18:15.073073+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-03T14:18:15.073073+00:00'
+[2026-05-03T14:18:18.492+0000] {base.py:83} INFO - Using connection ID 'postgres' for task execution.
+[2026-05-03T14:18:18.492+0000] {sql.py:218} WARNING - This setter is for backward compatibility and should not be used.
+Since the introduction of connection property, the providers listed below breaks due to assigning value to self.connection in their __init__ method.
+* apache-***-providers-mysql<5.7.1
+* apache-***-providers-elasticsearch<5.5.1
+* apache-***-providers-postgres<5.13.0
+[2026-05-03T14:18:18.536+0000] {sql.py:553} INFO - Running statement: CREATE SCHEMA IF NOT EXISTS stg;, parameters: None
+[2026-05-03T14:18:18.605+0000] {sql.py:553} INFO - Running statement: 
+        CREATE TABLE IF NOT EXISTS stg.transactions_data (
+            "id" TEXT, "date" TEXT, "client_id" TEXT, "card_id" TEXT, "amount" TEXT, "use_chip" TEXT, "merchant_id" TEXT, "merchant_city" TEXT, "merchant_state" TEXT, "zip" TEXT, "mcc" TEXT, "errors" TEXT
+        );
+        , parameters: None
+[2026-05-03T14:18:18.625+0000] {logging_mixin.py:188} INFO - Created CSV table stg.transactions_data
+[2026-05-03T14:18:18.661+0000] {sql.py:553} INFO - Running statement: 
+        CREATE TABLE IF NOT EXISTS stg.cards_data (
+            "id" TEXT, "client_id" TEXT, "card_brand" TEXT, "card_type" TEXT, "card_number" TEXT, "expires" TEXT, "cvv" TEXT, "has_chip" TEXT, "num_cards_issued" TEXT, "credit_limit" TEXT, "acct_open_date" TEXT, "year_pin_last_changed" TEXT, "card_on_dark_web" TEXT
+        );
+        , parameters: None
+[2026-05-03T14:18:18.681+0000] {logging_mixin.py:188} INFO - Created CSV table stg.cards_data
+[2026-05-03T14:18:18.727+0000] {sql.py:553} INFO - Running statement: 
+        CREATE TABLE IF NOT EXISTS stg.users_data (
+            "id" TEXT, "current_age" TEXT, "retirement_age" TEXT, "birth_year" TEXT, "birth_month" TEXT, "gender" TEXT, "address" TEXT, "latitude" TEXT, "longitude" TEXT, "per_capita_income" TEXT, "yearly_income" TEXT, "total_debt" TEXT, "credit_score" TEXT, "num_credit_cards" TEXT
+        );
+        , parameters: None
+[2026-05-03T14:18:18.747+0000] {logging_mixin.py:188} INFO - Created CSV table stg.users_data
+[2026-05-03T14:18:18.785+0000] {sql.py:553} INFO - Running statement: 
+        CREATE TABLE IF NOT EXISTS stg.train_fraud_labels (
+            transaction_id TEXT,
+            fraud_label INTEGER
+        );
+        , parameters: None
+[2026-05-03T14:18:18.806+0000] {logging_mixin.py:188} INFO - Created JSON table stg.train_fraud_labels
+[2026-05-03T14:18:18.842+0000] {sql.py:553} INFO - Running statement: 
+        CREATE TABLE IF NOT EXISTS stg.mcc_codes (
+            mcc_code TEXT,
+            mcc_description TEXT
+        );
+        , parameters: None
+[2026-05-03T14:18:18.862+0000] {logging_mixin.py:188} INFO - Created JSON table stg.mcc_codes
+[2026-05-03T14:18:18.863+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-05-03T14:18:18.883+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=test_postgres_connection, task_id=test_connection, execution_date=20260503T141815, start_date=20260503T141817, end_date=20260503T141818
+[2026-05-03T14:18:18.915+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-05-03T14:18:18.954+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,32 @@
+[2026-04-16T20:26:13.160+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fraud_data_load.download_dataset manual__2026-04-16T20:26:12.461585+00:00 [queued]>
+[2026-04-16T20:26:13.174+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fraud_data_load.download_dataset manual__2026-04-16T20:26:12.461585+00:00 [queued]>
+[2026-04-16T20:26:13.174+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-04-16T20:26:13.196+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): download_dataset> on 2026-04-16 20:26:12.461585+00:00
+[2026-04-16T20:26:13.209+0000] {standard_task_runner.py:60} INFO - Started process 370 to run task
+[2026-04-16T20:26:13.209+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fraud_data_load', 'download_dataset', 'manual__2026-04-16T20:26:12.461585+00:00', '--job-id', '26', '--raw', '--subdir', 'DAGS_FOLDER/fraud_data_load.py', '--cfg-path', '/tmp/tmp__12b7nc']
+[2026-04-16T20:26:13.214+0000] {standard_task_runner.py:88} INFO - Job 26: Subtask download_dataset
+[2026-04-16T20:26:13.242+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-16T20:26:13.302+0000] {task_command.py:423} INFO - Running <TaskInstance: fraud_data_load.download_dataset manual__2026-04-16T20:26:12.461585+00:00 [running]> on host 0b05c8bd5ead
+[2026-04-16T20:26:13.379+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fraud_data_load' AIRFLOW_CTX_TASK_ID='download_dataset' AIRFLOW_CTX_EXECUTION_DATE='2026-04-16T20:26:12.461585+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-16T20:26:12.461585+00:00'
+[2026-04-16T20:26:13.501+0000] {logging_mixin.py:188} INFO - Dataset URL: https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets
+[2026-04-16T20:26:14.026+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/fraud_data_load.py", line 17, in download_dataset
+    api.dataset_download_files(
+  File "/home/airflow/.local/lib/python3.9/site-packages/kaggle/api/kaggle_api_extended.py", line 1499, in dataset_download_files
+    self.download_file(response, outfile, quiet, not force)
+  File "/home/airflow/.local/lib/python3.9/site-packages/kaggle/api/kaggle_api_extended.py", line 1956, in download_file
+    with open(outfile, open_mode) as out:
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/airflow/data/transactions-fraud-datasets.zip'
+[2026-04-16T20:26:14.046+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=fraud_data_load, task_id=download_dataset, execution_date=20260416T202612, start_date=20260416T202613, end_date=20260416T202614
+[2026-04-16T20:26:14.071+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 26 for task download_dataset ([Errno 2] No such file or directory: '/opt/airflow/data/transactions-fraud-datasets.zip'; 370)
+[2026-04-16T20:26:14.118+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-04-16T20:26:14.135+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

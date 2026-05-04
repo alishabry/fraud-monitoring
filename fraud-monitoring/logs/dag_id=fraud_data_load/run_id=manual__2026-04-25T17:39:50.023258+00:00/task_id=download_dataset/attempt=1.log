@@ -1,0 +1,109 @@
+[2026-04-25T17:39:51.798+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fraud_data_load.download_dataset manual__2026-04-25T17:39:50.023258+00:00 [queued]>
+[2026-04-25T17:39:51.958+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fraud_data_load.download_dataset manual__2026-04-25T17:39:50.023258+00:00 [queued]>
+[2026-04-25T17:39:51.959+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-04-25T17:39:51.982+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): download_dataset> on 2026-04-25 17:39:50.023258+00:00
+[2026-04-25T17:39:51.989+0000] {standard_task_runner.py:60} INFO - Started process 125 to run task
+[2026-04-25T17:39:51.993+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fraud_data_load', 'download_dataset', 'manual__2026-04-25T17:39:50.023258+00:00', '--job-id', '41', '--raw', '--subdir', 'DAGS_FOLDER/fraud_data_load.py', '--cfg-path', '/tmp/tmpf71at4pc']
+[2026-04-25T17:39:51.996+0000] {standard_task_runner.py:88} INFO - Job 41: Subtask download_dataset
+[2026-04-25T17:39:52.013+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-25T17:39:52.044+0000] {task_command.py:423} INFO - Running <TaskInstance: fraud_data_load.download_dataset manual__2026-04-25T17:39:50.023258+00:00 [running]> on host 0b05c8bd5ead
+[2026-04-25T17:39:52.128+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fraud_data_load' AIRFLOW_CTX_TASK_ID='download_dataset' AIRFLOW_CTX_EXECUTION_DATE='2026-04-25T17:39:50.023258+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-25T17:39:50.023258+00:00'
+[2026-04-25T17:39:52.210+0000] {logging_mixin.py:188} INFO - Dataset URL: https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets
+[2026-04-25T17:39:52.794+0000] {logging_mixin.py:188} INFO - Downloading transactions-fraud-datasets.zip to /opt/***/data/transactions_fraud
+[2026-04-25T17:39:52.795+0000] {logging_mixin.py:188} WARNING -   0%|          | 0.00/348M [00:00<?, ?B/s]
+[2026-04-25T17:39:53.423+0000] {logging_mixin.py:188} WARNING -   0%|          | 1.00M/348M [00:00<03:37, 1.67MB/s]
+[2026-04-25T17:39:53.533+0000] {logging_mixin.py:188} WARNING -   1%|          | 2.00M/348M [00:00<01:51, 3.25MB/s]
+[2026-04-25T17:39:53.638+0000] {logging_mixin.py:188} WARNING -   1%|1         | 4.00M/348M [00:00<00:52, 6.83MB/s]
+[2026-04-25T17:39:53.748+0000] {logging_mixin.py:188} WARNING -   2%|2         | 8.00M/348M [00:00<00:24, 14.4MB/s]
+[2026-04-25T17:39:53.862+0000] {logging_mixin.py:188} WARNING -   3%|3         | 12.0M/348M [00:01<00:17, 20.4MB/s]
+[2026-04-25T17:39:53.976+0000] {logging_mixin.py:188} WARNING -   5%|4         | 16.0M/348M [00:01<00:14, 24.8MB/s]
+[2026-04-25T17:39:54.090+0000] {logging_mixin.py:188} WARNING -   6%|5         | 20.0M/348M [00:01<00:12, 28.2MB/s]
+[2026-04-25T17:39:54.269+0000] {logging_mixin.py:188} WARNING -   7%|6         | 24.0M/348M [00:01<00:12, 26.4MB/s]
+[2026-04-25T17:39:54.379+0000] {logging_mixin.py:188} WARNING -   8%|8         | 28.0M/348M [00:01<00:11, 29.3MB/s]
+[2026-04-25T17:39:54.485+0000] {logging_mixin.py:188} WARNING -   9%|9         | 32.0M/348M [00:01<00:10, 32.0MB/s]
+[2026-04-25T17:39:54.588+0000] {logging_mixin.py:188} WARNING -  10%|#         | 36.0M/348M [00:01<00:09, 34.3MB/s]
+[2026-04-25T17:39:54.693+0000] {logging_mixin.py:188} WARNING -  12%|#1        | 40.0M/348M [00:01<00:09, 35.9MB/s]
+[2026-04-25T17:39:54.798+0000] {logging_mixin.py:188} WARNING -  13%|#2        | 44.0M/348M [00:02<00:08, 37.0MB/s]
+[2026-04-25T17:39:54.904+0000] {logging_mixin.py:188} WARNING -  14%|#3        | 48.0M/348M [00:02<00:08, 37.8MB/s]
+[2026-04-25T17:39:55.008+0000] {logging_mixin.py:188} WARNING -  15%|#4        | 52.0M/348M [00:02<00:08, 38.5MB/s]
+[2026-04-25T17:39:55.113+0000] {logging_mixin.py:188} WARNING -  16%|#6        | 56.0M/348M [00:02<00:07, 38.9MB/s]
+[2026-04-25T17:39:55.224+0000] {logging_mixin.py:188} WARNING -  17%|#7        | 60.0M/348M [00:02<00:07, 38.6MB/s]
+[2026-04-25T17:39:55.403+0000] {logging_mixin.py:188} WARNING -  18%|#8        | 64.0M/348M [00:02<00:09, 32.3MB/s]
+[2026-04-25T17:39:55.520+0000] {logging_mixin.py:188} WARNING -  20%|#9        | 68.0M/348M [00:02<00:08, 33.3MB/s]
+[2026-04-25T17:39:55.633+0000] {logging_mixin.py:188} WARNING -  21%|##        | 72.0M/348M [00:02<00:08, 34.4MB/s]
+[2026-04-25T17:39:55.746+0000] {logging_mixin.py:188} WARNING -  22%|##1       | 76.0M/348M [00:02<00:08, 35.2MB/s]
+[2026-04-25T17:39:55.857+0000] {logging_mixin.py:188} WARNING -  23%|##3       | 80.0M/348M [00:03<00:07, 35.9MB/s]
+[2026-04-25T17:39:55.968+0000] {logging_mixin.py:188} WARNING -  24%|##4       | 84.0M/348M [00:03<00:07, 36.5MB/s]
+[2026-04-25T17:39:56.079+0000] {logging_mixin.py:188} WARNING -  25%|##5       | 88.0M/348M [00:03<00:07, 36.8MB/s]
+[2026-04-25T17:39:56.192+0000] {logging_mixin.py:188} WARNING -  26%|##6       | 92.0M/348M [00:03<00:07, 37.0MB/s]
+[2026-04-25T17:39:56.303+0000] {logging_mixin.py:188} WARNING -  28%|##7       | 96.0M/348M [00:03<00:07, 37.2MB/s]
+[2026-04-25T17:39:56.413+0000] {logging_mixin.py:188} WARNING -  29%|##8       | 100M/348M [00:03<00:06, 37.4MB/s] 
+[2026-04-25T17:39:56.525+0000] {logging_mixin.py:188} WARNING -  30%|##9       | 104M/348M [00:03<00:06, 37.5MB/s]
+[2026-04-25T17:39:56.703+0000] {logging_mixin.py:188} WARNING -  31%|###1      | 108M/348M [00:03<00:07, 31.8MB/s]
+[2026-04-25T17:39:56.823+0000] {logging_mixin.py:188} WARNING -  32%|###2      | 112M/348M [00:04<00:07, 32.7MB/s]
+[2026-04-25T17:39:56.934+0000] {logging_mixin.py:188} WARNING -  33%|###3      | 116M/348M [00:04<00:07, 34.1MB/s]
+[2026-04-25T17:39:57.048+0000] {logging_mixin.py:188} WARNING -  35%|###4      | 120M/348M [00:04<00:06, 34.9MB/s]
+[2026-04-25T17:39:57.157+0000] {logging_mixin.py:188} WARNING -  36%|###5      | 124M/348M [00:04<00:06, 35.8MB/s]
+[2026-04-25T17:39:57.269+0000] {logging_mixin.py:188} WARNING -  37%|###6      | 128M/348M [00:04<00:06, 36.4MB/s]
+[2026-04-25T17:39:57.380+0000] {logging_mixin.py:188} WARNING -  38%|###7      | 132M/348M [00:04<00:06, 36.7MB/s]
+[2026-04-25T17:39:57.491+0000] {logging_mixin.py:188} WARNING -  39%|###9      | 136M/348M [00:04<00:05, 37.0MB/s]
+[2026-04-25T17:39:57.608+0000] {logging_mixin.py:188} WARNING -  40%|####      | 140M/348M [00:04<00:05, 36.7MB/s]
+[2026-04-25T17:39:57.717+0000] {logging_mixin.py:188} WARNING -  41%|####1     | 144M/348M [00:04<00:05, 37.2MB/s]
+[2026-04-25T17:39:57.827+0000] {logging_mixin.py:188} WARNING -  43%|####2     | 148M/348M [00:05<00:05, 37.4MB/s]
+[2026-04-25T17:39:58.004+0000] {logging_mixin.py:188} WARNING -  44%|####3     | 152M/348M [00:05<00:06, 31.9MB/s]
+[2026-04-25T17:39:58.120+0000] {logging_mixin.py:188} WARNING -  45%|####4     | 156M/348M [00:05<00:06, 33.0MB/s]
+[2026-04-25T17:39:58.234+0000] {logging_mixin.py:188} WARNING -  46%|####6     | 160M/348M [00:05<00:05, 34.1MB/s]
+[2026-04-25T17:39:58.345+0000] {logging_mixin.py:188} WARNING -  47%|####7     | 164M/348M [00:05<00:05, 35.1MB/s]
+[2026-04-25T17:39:58.461+0000] {logging_mixin.py:188} WARNING -  48%|####8     | 168M/348M [00:05<00:05, 35.5MB/s]
+[2026-04-25T17:39:58.571+0000] {logging_mixin.py:188} WARNING -  49%|####9     | 172M/348M [00:05<00:05, 36.2MB/s]
+[2026-04-25T17:39:58.788+0000] {logging_mixin.py:188} WARNING -  51%|#####     | 176M/348M [00:05<00:06, 28.7MB/s]
+[2026-04-25T17:39:58.903+0000] {logging_mixin.py:188} WARNING -  51%|#####1    | 179M/348M [00:06<00:06, 28.3MB/s]
+[2026-04-25T17:39:59.006+0000] {logging_mixin.py:188} WARNING -  52%|#####2    | 182M/348M [00:06<00:06, 28.9MB/s]
+[2026-04-25T17:39:59.117+0000] {logging_mixin.py:188} WARNING -  53%|#####3    | 186M/348M [00:06<00:05, 31.3MB/s]
+[2026-04-25T17:39:59.229+0000] {logging_mixin.py:188} WARNING -  55%|#####4    | 190M/348M [00:06<00:04, 33.1MB/s]
+[2026-04-25T17:39:59.340+0000] {logging_mixin.py:188} WARNING -  56%|#####5    | 194M/348M [00:06<00:04, 34.4MB/s]
+[2026-04-25T17:39:59.465+0000] {logging_mixin.py:188} WARNING -  57%|#####6    | 198M/348M [00:06<00:04, 34.1MB/s]
+[2026-04-25T17:39:59.666+0000] {logging_mixin.py:188} WARNING -  58%|#####8    | 202M/348M [00:06<00:05, 28.6MB/s]
+[2026-04-25T17:39:59.777+0000] {logging_mixin.py:188} WARNING -  59%|#####9    | 206M/348M [00:06<00:04, 30.8MB/s]
+[2026-04-25T17:39:59.889+0000] {logging_mixin.py:188} WARNING -  60%|######    | 210M/348M [00:07<00:04, 32.6MB/s]
+[2026-04-25T17:40:00.002+0000] {logging_mixin.py:188} WARNING -  62%|######1   | 214M/348M [00:07<00:04, 33.9MB/s]
+[2026-04-25T17:40:00.112+0000] {logging_mixin.py:188} WARNING -  63%|######2   | 218M/348M [00:07<00:03, 35.0MB/s]
+[2026-04-25T17:40:00.223+0000] {logging_mixin.py:188} WARNING -  64%|######3   | 222M/348M [00:07<00:03, 35.8MB/s]
+[2026-04-25T17:40:00.334+0000] {logging_mixin.py:188} WARNING -  65%|######4   | 226M/348M [00:07<00:03, 36.3MB/s]
+[2026-04-25T17:40:00.446+0000] {logging_mixin.py:188} WARNING -  66%|######6   | 230M/348M [00:07<00:03, 36.7MB/s]
+[2026-04-25T17:40:00.558+0000] {logging_mixin.py:188} WARNING -  67%|######7   | 234M/348M [00:07<00:03, 37.0MB/s]
+[2026-04-25T17:40:00.670+0000] {logging_mixin.py:188} WARNING -  68%|######8   | 238M/348M [00:07<00:03, 37.1MB/s]
+[2026-04-25T17:40:00.780+0000] {logging_mixin.py:188} WARNING -  70%|######9   | 242M/348M [00:07<00:02, 37.4MB/s]
+[2026-04-25T17:40:00.967+0000] {logging_mixin.py:188} WARNING -  71%|#######   | 246M/348M [00:08<00:03, 31.2MB/s]
+[2026-04-25T17:40:01.077+0000] {logging_mixin.py:188} WARNING -  72%|#######1  | 250M/348M [00:08<00:03, 32.9MB/s]
+[2026-04-25T17:40:01.189+0000] {logging_mixin.py:188} WARNING -  73%|#######3  | 254M/348M [00:08<00:02, 34.2MB/s]
+[2026-04-25T17:40:01.303+0000] {logging_mixin.py:188} WARNING -  74%|#######4  | 258M/348M [00:08<00:02, 34.9MB/s]
+[2026-04-25T17:40:01.413+0000] {logging_mixin.py:188} WARNING -  75%|#######5  | 262M/348M [00:08<00:02, 35.9MB/s]
+[2026-04-25T17:40:01.524+0000] {logging_mixin.py:188} WARNING -  76%|#######6  | 266M/348M [00:08<00:02, 36.4MB/s]
+[2026-04-25T17:40:01.636+0000] {logging_mixin.py:188} WARNING -  78%|#######7  | 270M/348M [00:08<00:02, 36.7MB/s]
+[2026-04-25T17:40:01.747+0000] {logging_mixin.py:188} WARNING -  79%|#######8  | 274M/348M [00:08<00:02, 37.0MB/s]
+[2026-04-25T17:40:01.859+0000] {logging_mixin.py:188} WARNING -  80%|#######9  | 278M/348M [00:09<00:01, 37.2MB/s]
+[2026-04-25T17:40:01.970+0000] {logging_mixin.py:188} WARNING -  81%|########1 | 282M/348M [00:09<00:01, 37.3MB/s]
+[2026-04-25T17:40:02.081+0000] {logging_mixin.py:188} WARNING -  82%|########2 | 286M/348M [00:09<00:01, 37.4MB/s]
+[2026-04-25T17:40:02.268+0000] {logging_mixin.py:188} WARNING -  83%|########3 | 290M/348M [00:09<00:01, 31.2MB/s]
+[2026-04-25T17:40:02.379+0000] {logging_mixin.py:188} WARNING -  85%|########4 | 294M/348M [00:09<00:01, 32.9MB/s]
+[2026-04-25T17:40:02.490+0000] {logging_mixin.py:188} WARNING -  86%|########5 | 298M/348M [00:09<00:01, 34.2MB/s]
+[2026-04-25T17:40:02.602+0000] {logging_mixin.py:188} WARNING -  87%|########6 | 302M/348M [00:09<00:01, 35.2MB/s]
+[2026-04-25T17:40:02.714+0000] {logging_mixin.py:188} WARNING -  88%|########7 | 306M/348M [00:09<00:01, 35.8MB/s]
+[2026-04-25T17:40:02.825+0000] {logging_mixin.py:188} WARNING -  89%|########9 | 310M/348M [00:10<00:01, 36.4MB/s]
+[2026-04-25T17:40:02.936+0000] {logging_mixin.py:188} WARNING -  90%|######### | 314M/348M [00:10<00:00, 36.7MB/s]
+[2026-04-25T17:40:03.048+0000] {logging_mixin.py:188} WARNING -  91%|#########1| 318M/348M [00:10<00:00, 37.0MB/s]
+[2026-04-25T17:40:03.160+0000] {logging_mixin.py:188} WARNING -  93%|#########2| 322M/348M [00:10<00:00, 37.2MB/s]
+[2026-04-25T17:40:03.271+0000] {logging_mixin.py:188} WARNING -  94%|#########3| 326M/348M [00:10<00:00, 37.3MB/s]
+[2026-04-25T17:40:03.382+0000] {logging_mixin.py:188} WARNING -  95%|#########4| 330M/348M [00:10<00:00, 37.4MB/s]
+[2026-04-25T17:40:03.568+0000] {logging_mixin.py:188} WARNING -  96%|#########6| 334M/348M [00:10<00:00, 31.3MB/s]
+[2026-04-25T17:40:03.679+0000] {logging_mixin.py:188} WARNING -  97%|#########7| 338M/348M [00:10<00:00, 33.0MB/s]
+[2026-04-25T17:40:03.791+0000] {logging_mixin.py:188} WARNING -  98%|#########8| 342M/348M [00:10<00:00, 34.2MB/s]
+[2026-04-25T17:40:03.902+0000] {logging_mixin.py:188} WARNING - 100%|#########9| 346M/348M [00:11<00:00, 35.2MB/s]
+[2026-04-25T17:40:03.919+0000] {logging_mixin.py:188} WARNING - 100%|##########| 348M/348M [00:11<00:00, 32.8MB/s]
+[2026-04-25T17:40:25.506+0000] {python.py:201} INFO - Done. Returned value was: ['train_fraud_labels.json', 'mcc_codes.json', 'transactions_data.csv', 'cards_data.csv', 'users_data.csv']
+[2026-04-25T17:40:25.542+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=fraud_data_load, task_id=download_dataset, execution_date=20260425T173950, start_date=20260425T173951, end_date=20260425T174025
+[2026-04-25T17:40:25.594+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-04-25T17:40:25.618+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

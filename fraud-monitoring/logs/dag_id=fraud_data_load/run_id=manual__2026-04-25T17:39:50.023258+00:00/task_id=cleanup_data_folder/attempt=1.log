@@ -1,0 +1,16 @@
+[2026-04-25T17:40:28.690+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fraud_data_load.cleanup_data_folder manual__2026-04-25T17:39:50.023258+00:00 [queued]>
+[2026-04-25T17:40:28.700+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fraud_data_load.cleanup_data_folder manual__2026-04-25T17:39:50.023258+00:00 [queued]>
+[2026-04-25T17:40:28.701+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-04-25T17:40:28.714+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): cleanup_data_folder> on 2026-04-25 17:39:50.023258+00:00
+[2026-04-25T17:40:28.720+0000] {standard_task_runner.py:60} INFO - Started process 152 to run task
+[2026-04-25T17:40:28.724+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fraud_data_load', 'cleanup_data_folder', 'manual__2026-04-25T17:39:50.023258+00:00', '--job-id', '43', '--raw', '--subdir', 'DAGS_FOLDER/fraud_data_load.py', '--cfg-path', '/tmp/tmpn9m7apph']
+[2026-04-25T17:40:28.726+0000] {standard_task_runner.py:88} INFO - Job 43: Subtask cleanup_data_folder
+[2026-04-25T17:40:28.739+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-25T17:40:28.769+0000] {task_command.py:423} INFO - Running <TaskInstance: fraud_data_load.cleanup_data_folder manual__2026-04-25T17:39:50.023258+00:00 [running]> on host 0b05c8bd5ead
+[2026-04-25T17:40:28.847+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fraud_data_load' AIRFLOW_CTX_TASK_ID='cleanup_data_folder' AIRFLOW_CTX_EXECUTION_DATE='2026-04-25T17:39:50.023258+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-25T17:39:50.023258+00:00'
+[2026-04-25T17:40:28.848+0000] {taskinstance.py:2360} INFO - Temporarily skipped
+[2026-04-25T17:40:28.856+0000] {taskinstance.py:1138} INFO - Marking task as SKIPPED. dag_id=fraud_data_load, task_id=cleanup_data_folder, execution_date=20260425T173950, start_date=20260425T174028, end_date=20260425T174028
+[2026-04-25T17:40:28.896+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-04-25T17:40:28.913+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,43 @@
+[2026-04-25T16:52:03.151+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fraud_data_load.load_csv_to_stg manual__2026-04-25T16:51:17.352710+00:00 [queued]>
+[2026-04-25T16:52:03.161+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fraud_data_load.load_csv_to_stg manual__2026-04-25T16:51:17.352710+00:00 [queued]>
+[2026-04-25T16:52:03.162+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-04-25T16:52:03.178+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_csv_to_stg> on 2026-04-25 16:51:17.352710+00:00
+[2026-04-25T16:52:03.184+0000] {standard_task_runner.py:60} INFO - Started process 91 to run task
+[2026-04-25T16:52:03.187+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fraud_data_load', 'load_csv_to_stg', 'manual__2026-04-25T16:51:17.352710+00:00', '--job-id', '36', '--raw', '--subdir', 'DAGS_FOLDER/fraud_data_load.py', '--cfg-path', '/tmp/tmpk_mfnhob']
+[2026-04-25T16:52:03.188+0000] {standard_task_runner.py:88} INFO - Job 36: Subtask load_csv_to_stg
+[2026-04-25T16:52:03.202+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-25T16:52:03.232+0000] {task_command.py:423} INFO - Running <TaskInstance: fraud_data_load.load_csv_to_stg manual__2026-04-25T16:51:17.352710+00:00 [running]> on host 0b05c8bd5ead
+[2026-04-25T16:52:03.309+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fraud_data_load' AIRFLOW_CTX_TASK_ID='load_csv_to_stg' AIRFLOW_CTX_EXECUTION_DATE='2026-04-25T16:51:17.352710+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-25T16:51:17.352710+00:00'
+[2026-04-25T16:52:03.319+0000] {base.py:83} INFO - Using connection ID 'postgres' for task execution.
+[2026-04-25T16:52:03.320+0000] {sql.py:218} WARNING - This setter is for backward compatibility and should not be used.
+Since the introduction of connection property, the providers listed below breaks due to assigning value to self.connection in their __init__ method.
+* apache-***-providers-mysql<5.7.1
+* apache-***-providers-elasticsearch<5.5.1
+* apache-***-providers-postgres<5.13.0
+[2026-04-25T16:52:03.357+0000] {sql.py:553} INFO - Running statement: TRUNCATE TABLE stg.transactions_data;, parameters: None
+[2026-04-25T16:52:03.384+0000] {postgres.py:172} INFO - Running copy expert: 
+            COPY stg.transactions_data
+            FROM STDIN
+            WITH CSV HEADER DELIMITER ',' QUOTE '"'
+        , filename: /opt/***/data/transactions_fraud/transactions_data.csv
+[2026-04-25T16:56:41.596+0000] {logging_mixin.py:188} INFO - Loaded transactions_data.csv into stg.transactions_data
+[2026-04-25T16:56:41.631+0000] {sql.py:553} INFO - Running statement: TRUNCATE TABLE stg.cards_data;, parameters: None
+[2026-04-25T16:56:41.657+0000] {postgres.py:172} INFO - Running copy expert: 
+            COPY stg.cards_data
+            FROM STDIN
+            WITH CSV HEADER DELIMITER ',' QUOTE '"'
+        , filename: /opt/***/data/transactions_fraud/cards_data.csv
+[2026-04-25T16:56:41.765+0000] {logging_mixin.py:188} INFO - Loaded cards_data.csv into stg.cards_data
+[2026-04-25T16:56:41.799+0000] {sql.py:553} INFO - Running statement: TRUNCATE TABLE stg.users_data;, parameters: None
+[2026-04-25T16:56:41.824+0000] {postgres.py:172} INFO - Running copy expert: 
+            COPY stg.users_data
+            FROM STDIN
+            WITH CSV HEADER DELIMITER ',' QUOTE '"'
+        , filename: /opt/***/data/transactions_fraud/users_data.csv
+[2026-04-25T16:56:41.919+0000] {logging_mixin.py:188} INFO - Loaded users_data.csv into stg.users_data
+[2026-04-25T16:56:41.920+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-04-25T16:56:41.930+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=fraud_data_load, task_id=load_csv_to_stg, execution_date=20260425T165117, start_date=20260425T165203, end_date=20260425T165641
+[2026-04-25T16:56:41.985+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-04-25T16:56:42.004+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

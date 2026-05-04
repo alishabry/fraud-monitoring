@@ -1,0 +1,31 @@
+[2026-04-16T18:40:06.322+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fraud_data_load.load_data manual__2026-04-16T18:30:01.781557+00:00 [queued]>
+[2026-04-16T18:40:06.335+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fraud_data_load.load_data manual__2026-04-16T18:30:01.781557+00:00 [queued]>
+[2026-04-16T18:40:06.335+0000] {taskinstance.py:2170} INFO - Starting attempt 3 of 3
+[2026-04-16T18:40:06.359+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-04-16 18:30:01.781557+00:00
+[2026-04-16T18:40:06.366+0000] {standard_task_runner.py:60} INFO - Started process 60 to run task
+[2026-04-16T18:40:06.370+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fraud_data_load', 'load_data', 'manual__2026-04-16T18:30:01.781557+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/load_transactional_data.py', '--cfg-path', '/tmp/tmpy7ypcwly']
+[2026-04-16T18:40:06.372+0000] {standard_task_runner.py:88} INFO - Job 8: Subtask load_data
+[2026-04-16T18:40:06.393+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-04-16T18:40:06.650+0000] {task_command.py:423} INFO - Running <TaskInstance: fraud_data_load.load_data manual__2026-04-16T18:30:01.781557+00:00 [running]> on host 56d951a931cf
+[2026-04-16T18:40:06.758+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fraud_data_load' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-04-16T18:30:01.781557+00:00' AIRFLOW_CTX_TRY_NUMBER='3' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-04-16T18:30:01.781557+00:00'
+[2026-04-16T18:40:07.049+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/load_transactional_data.py", line 25, in download_dataset
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+  File "/usr/local/lib/python3.9/zipfile.py", line 1266, in __init__
+    self._RealGetContents()
+  File "/usr/local/lib/python3.9/zipfile.py", line 1333, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+[2026-04-16T18:40:07.057+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=fraud_data_load, task_id=load_data, execution_date=20260416T183001, start_date=20260416T184006, end_date=20260416T184007
+[2026-04-16T18:40:07.071+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 8 for task load_data (File is not a zip file; 60)
+[2026-04-16T18:40:07.112+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-04-16T18:40:07.128+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

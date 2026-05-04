@@ -1,0 +1,131 @@
+version: '3.8'
+
+# Define common build configuration
+x-airflow-build: &airflow-build
+  context: .
+  dockerfile: Dockerfile
+  args:
+    AIRFLOW_UID: ${AIRFLOW_UID:-50000}
+
+x-airflow-common: &airflow-common
+  image: custom-airflow:latest  # All services use the same pre-built image
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
+    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+    AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY:-}
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: 'true'
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+    - ./config:/opt/airflow/config
+    - ./scripts:/opt/airflow/scripts
+    - ./data:/opt/airflow/data
+  user: "${AIRFLOW_UID:-50000}:0"
+
+services:
+  # Build service only builds the image
+  airflow-builder:
+    build: *airflow-build
+    image: custom-airflow:latest
+    container_name: airflow-builder
+    # This service doesn't need to run, just builds the image
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 50
+
+  # Airflow services - they all use the pre-built image
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: airflow-webserver
+    command: webserver
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      - postgres
+      - redis
+      - airflow-builder
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: airflow-scheduler
+    command: scheduler
+    restart: on-failure
+    depends_on:
+      - postgres
+      - redis
+      - airflow-builder
+
+  airflow-worker:
+    <<: *airflow-common
+    container_name: airflow-worker
+    command: celery worker
+    restart: on-failure
+    depends_on:
+      - postgres
+      - redis
+      - airflow-builder
+
+  airflow-triggerer:
+    <<: *airflow-common
+    container_name: airflow-triggerer
+    command: triggerer
+    restart: on-failure
+    depends_on:
+      - postgres
+      - redis
+      - airflow-builder
+
+  airflow-init:
+    <<: *airflow-common
+    container_name: airflow-init
+    command: bash -c "airflow db init && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  flower:
+    <<: *airflow-common
+    container_name: airflow-flower
+    command: celery flower
+    ports:
+      - "5555:5555"
+    depends_on:
+      - postgres
+      - redis
+      - airflow-builder
+
+volumes:
+  postgres_data:

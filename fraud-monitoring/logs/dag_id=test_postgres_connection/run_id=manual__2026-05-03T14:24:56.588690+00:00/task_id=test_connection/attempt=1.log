@@ -1,0 +1,84 @@
+[2026-05-03T14:24:58.689+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: test_postgres_connection.test_connection manual__2026-05-03T14:24:56.588690+00:00 [queued]>
+[2026-05-03T14:24:59.002+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: test_postgres_connection.test_connection manual__2026-05-03T14:24:56.588690+00:00 [queued]>
+[2026-05-03T14:24:59.002+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-05-03T14:24:59.027+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): test_connection> on 2026-05-03 14:24:56.588690+00:00
+[2026-05-03T14:24:59.035+0000] {standard_task_runner.py:60} INFO - Started process 59 to run task
+[2026-05-03T14:24:59.039+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'test_postgres_connection', 'test_connection', 'manual__2026-05-03T14:24:56.588690+00:00', '--job-id', '56', '--raw', '--subdir', 'DAGS_FOLDER/test.py', '--cfg-path', '/tmp/tmpxjo9cekr']
+[2026-05-03T14:24:59.044+0000] {standard_task_runner.py:88} INFO - Job 56: Subtask test_connection
+[2026-05-03T14:24:59.076+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-05-03T14:24:59.155+0000] {task_command.py:423} INFO - Running <TaskInstance: test_postgres_connection.test_connection manual__2026-05-03T14:24:56.588690+00:00 [running]> on host e20c5bc7e70d
+[2026-05-03T14:24:59.315+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='test_postgres_connection' AIRFLOW_CTX_TASK_ID='test_connection' AIRFLOW_CTX_EXECUTION_DATE='2026-05-03T14:24:56.588690+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-03T14:24:56.588690+00:00'
+[2026-05-03T14:24:59.335+0000] {base.py:83} INFO - Using connection ID 'postgres' for task execution.
+[2026-05-03T14:24:59.336+0000] {sql.py:218} WARNING - This setter is for backward compatibility and should not be used.
+Since the introduction of connection property, the providers listed below breaks due to assigning value to self.connection in their __init__ method.
+* apache-***-providers-mysql<5.7.1
+* apache-***-providers-elasticsearch<5.5.1
+* apache-***-providers-postgres<5.13.0
+[2026-05-03T14:25:15.075+0000] {warnings.py:109} WARNING - /opt/***/dags/tasks/load_data/load_json_to_stg.py:35: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  df_labels.to_sql(
+
+[2026-05-03T14:25:15.103+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/sql.py", line 2262, in execute
+    cur.execute(sql, *args)
+psycopg2.errors.SyntaxError: syntax error at or near ";"
+LINE 8:             AND name=?;
+                              ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/tasks/load_data/load_json_to_stg.py", line 35, in load_json_to_stg
+    df_labels.to_sql(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/core/generic.py", line 3008, in to_sql
+    return sql.to_sql(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/sql.py", line 788, in to_sql
+    return pandas_sql.to_sql(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/sql.py", line 2438, in to_sql
+    table.create()
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/sql.py", line 925, in create
+    if self.exists():
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/sql.py", line 911, in exists
+    return self.pd_sql.has_table(self.name, self.schema)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/sql.py", line 2453, in has_table
+    return len(self.execute(query, [name]).fetchall()) > 0
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/sql.py", line 2274, in execute
+    raise ex from exc
+pandas.errors.DatabaseError: Execution failed on sql '
+        SELECT
+            name
+        FROM
+            sqlite_master
+        WHERE
+            type IN ('table', 'view')
+            AND name=?;
+        ': syntax error at or near ";"
+LINE 8:             AND name=?;
+                              ^
+
+[2026-05-03T14:25:15.126+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=test_postgres_connection, task_id=test_connection, execution_date=20260503T142456, start_date=20260503T142458, end_date=20260503T142515
+[2026-05-03T14:25:15.154+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 56 for task test_connection (Execution failed on sql '
+        SELECT
+            name
+        FROM
+            sqlite_master
+        WHERE
+            type IN ('table', 'view')
+            AND name=?;
+        ': syntax error at or near ";"
+LINE 8:             AND name=?;
+                              ^
+; 59)
+[2026-05-03T14:25:15.296+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-05-03T14:25:15.337+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,111 @@
+[2026-05-03T17:11:49.079+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fraud_stg_to_ods_pipeline.stg_to_ods manual__2026-05-03T17:11:48.698452+00:00 [queued]>
+[2026-05-03T17:11:49.087+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fraud_stg_to_ods_pipeline.stg_to_ods manual__2026-05-03T17:11:48.698452+00:00 [queued]>
+[2026-05-03T17:11:49.087+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 2
+[2026-05-03T17:11:49.098+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): stg_to_ods> on 2026-05-03 17:11:48.698452+00:00
+[2026-05-03T17:11:49.103+0000] {standard_task_runner.py:60} INFO - Started process 51 to run task
+[2026-05-03T17:11:49.106+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'fraud_stg_to_ods_pipeline', 'stg_to_ods', 'manual__2026-05-03T17:11:48.698452+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/fraud_dwh_pipeline.py', '--cfg-path', '/tmp/tmpibjm3pks']
+[2026-05-03T17:11:49.107+0000] {standard_task_runner.py:88} INFO - Job 5: Subtask stg_to_ods
+[2026-05-03T17:11:49.119+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.9/site-packages/***/settings.py:194: DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+  SQL_ALCHEMY_CONN = conf.get("database", "SQL_ALCHEMY_CONN")
+
+[2026-05-03T17:11:49.147+0000] {task_command.py:423} INFO - Running <TaskInstance: fraud_stg_to_ods_pipeline.stg_to_ods manual__2026-05-03T17:11:48.698452+00:00 [running]> on host 99ecb32bc6c5
+[2026-05-03T17:11:49.202+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fraud_stg_to_ods_pipeline' AIRFLOW_CTX_TASK_ID='stg_to_ods' AIRFLOW_CTX_EXECUTION_DATE='2026-05-03T17:11:48.698452+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-05-03T17:11:48.698452+00:00'
+[2026-05-03T17:11:49.209+0000] {base.py:83} INFO - Using connection ID 'postgres' for task execution.
+[2026-05-03T17:11:49.209+0000] {sql.py:218} WARNING - This setter is for backward compatibility and should not be used.
+Since the introduction of connection property, the providers listed below breaks due to assigning value to self.connection in their __init__ method.
+* apache-***-providers-mysql<5.7.1
+* apache-***-providers-elasticsearch<5.5.1
+* apache-***-providers-postgres<5.13.0
+[2026-05-03T17:11:49.245+0000] {sql.py:553} INFO - Running statement: 
+    CREATE SCHEMA IF NOT EXISTS ods;
+
+    DROP TABLE IF EXISTS ods.transactions;
+    CREATE TABLE ods.transactions AS
+    SELECT
+        id AS transaction_id,
+        NULLIF(date, '')::timestamp AS transaction_ts,
+        client_id AS user_id,
+        card_id,
+        NULLIF(REPLACE(REPLACE(amount, '$', ''), ',', ''), '')::numeric(18,2) AS amount,
+        CASE
+            WHEN LOWER(TRIM(use_chip)) IN ('yes', 'true', '1') THEN TRUE
+            WHEN LOWER(TRIM(use_chip)) IN ('no', 'false', '0') THEN FALSE
+            ELSE NULL
+        END AS use_chip_flag,
+        merchant_id,
+        merchant_city,
+        merchant_state,
+        zip AS merchant_zip,
+        mcc AS mcc_code,
+        NULLIF(errors, '') AS transaction_errors
+    FROM stg.transactions_data;
+
+    DROP TABLE IF EXISTS ods.users;
+    CREATE TABLE ods.users AS
+    SELECT
+        id AS user_id,
+        NULLIF(current_age, '')::int AS current_age,
+        NULLIF(retirement_age, '')::int AS retirement_age,
+        NULLIF(birth_year, '')::int AS birth_year,
+        NULLIF(birth_month, '')::int AS birth_month,
+        NULLIF(gender, '') AS gender,
+        NULLIF(address, '') AS address,
+        NULLIF(latitude, '')::numeric(12,8) AS latitude,
+        NULLIF(longitude, '')::numeric(12,8) AS longitude,
+        NULLIF(REPLACE(REPLACE(per_capita_income, '$', ''), ',', ''), '')::numeric(18,2) AS per_capita_income,
+        NULLIF(REPLACE(REPLACE(yearly_income, '$', ''), ',', ''), '')::numeric(18,2) AS yearly_income,
+        NULLIF(REPLACE(REPLACE(total_debt, '$', ''), ',', ''), '')::numeric(18,2) AS total_debt,
+        NULLIF(credit_score, '')::int AS credit_score,
+        NULLIF(num_credit_cards, '')::int AS num_credit_cards
+    FROM stg.users_data;
+
+    DROP TABLE IF EXISTS ods.cards;
+    CREATE TABLE ods.cards AS
+    SELECT
+        id AS card_id,
+        client_id AS user_id,
+        NULLIF(card_brand, '') AS card_brand,
+        NULLIF(card_type, '') AS card_type,
+        NULLIF(card_number, '') AS card_number_masked,
+        NULLIF(expires, '') AS expires_raw,
+        NULLIF(cvv, '') AS cvv_raw,
+        CASE
+            WHEN LOWER(TRIM(has_chip)) IN ('yes', 'true', '1') THEN TRUE
+            WHEN LOWER(TRIM(has_chip)) IN ('no', 'false', '0') THEN FALSE
+            ELSE NULL
+        END AS has_chip_flag,
+        NULLIF(num_cards_issued, '')::int AS num_cards_issued,
+        NULLIF(REPLACE(REPLACE(credit_limit, '$', ''), ',', ''), '')::numeric(18,2) AS credit_limit,
+        NULLIF(acct_open_date, '') AS acct_open_date_raw,
+        NULLIF(year_pin_last_changed, '')::int AS year_pin_last_changed,
+        CASE
+            WHEN LOWER(TRIM(card_on_dark_web)) IN ('yes', 'true', '1') THEN TRUE
+            WHEN LOWER(TRIM(card_on_dark_web)) IN ('no', 'false', '0') THEN FALSE
+            ELSE NULL
+        END AS card_on_dark_web_flag
+    FROM stg.cards_data;
+
+    DROP TABLE IF EXISTS ods.mcc_codes;
+    CREATE TABLE ods.mcc_codes AS
+    SELECT
+        mcc_code,
+        NULLIF(mcc_description, '') AS mcc_description
+    FROM stg.mcc_codes;
+
+    DROP TABLE IF EXISTS ods.fraud_labels;
+    CREATE TABLE ods.fraud_labels AS
+    SELECT
+        transaction_id,
+        NULLIF(fraud_label, '') AS fraud_label,
+        CASE
+            WHEN LOWER(TRIM(fraud_label)) IN ('yes', 'true', '1', 'fraud') THEN TRUE
+            WHEN LOWER(TRIM(fraud_label)) IN ('no', 'false', '0', 'not fraud') THEN FALSE
+            ELSE NULL
+        END AS is_fraud_flag
+    FROM stg.train_fraud_labels;
+    , parameters: None
+[2026-05-03T17:17:44.680+0000] {sql.py:562} INFO - Rows affected: 8914963
+[2026-05-03T17:17:46.590+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-05-03T17:17:46.599+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=fraud_stg_to_ods_pipeline, task_id=stg_to_ods, execution_date=20260503T171148, start_date=20260503T171149, end_date=20260503T171746
+[2026-05-03T17:17:46.630+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-05-03T17:17:46.643+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
